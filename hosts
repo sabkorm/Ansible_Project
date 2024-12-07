@@ -1,0 +1,6 @@
+[UBUNTU]
+ubuntu ansible_host=[host1 IP]
+ubuntu2 ansible_host=[host2 IP]
+
+[FEDORA]
+fedora3 ansible_host=[host3 IP]

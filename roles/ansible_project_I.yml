@@ -1,0 +1,6 @@
+- name: installing packages
+  hosts: all
+  become: yes
+
+  roles:
+    - final_project

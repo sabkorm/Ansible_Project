@@ -1,0 +1,5 @@
+---
+# defaults file for ansible_project_I
+
+dest_file: /var/www/html
+

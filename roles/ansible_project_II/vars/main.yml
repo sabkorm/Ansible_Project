@@ -1,0 +1,5 @@
+---
+# vars file for ansible_project_II
+
+msg_1: "Text to print"
+

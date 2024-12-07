@@ -1,0 +1,58 @@
+---
+# tasks file for ansible_project_II
+- name: copy file
+  copy: src={{ "1.txt" }}  dest={{  dest_file  }}  mode=0444
+
+- name: printing loop
+  debug:
+    msg: "Printing {{ item }} times"
+  loop: [ 1 , 2 , 3 ]
+
+- name: print message
+  debug:
+    msg: "Ansible Project II: {{ msg_1 }}"
+
+- name: print os family
+  debug:
+    msg: "{{  ansible_os_family  }}"
+
+- name: delete existing log
+  shell: rm log.txt
+  delegate_to: 127.0.0.1
+  ignore_errors: yes
+  run_once: true
+
+- name: print to file
+  lineinfile:
+    path: ./log.txt
+    mode: 0666
+    line: "{{ inventory_hostname }} IP is {{ ansible_default_ipv4.address }}"
+    create: yes
+  delegate_to: 127.0.0.1
+
+
+- name: reboot host
+  shell: "sleep 2 && reboot now"
+  async: 1
+  poll: 0
+
+- name: wait for reboot
+  wait_for:
+    host: "{{ ansible_ssh_host }}"
+    port: 22
+    state: started
+    delay: 30
+    timeout: 120
+  delegate_to: 127.0.0.1
+  ignore_errors: yes
+
+- name: grabbing uptime
+  shell: uptime
+  register: hostuptime
+
+- name: printing host uptime to log
+  lineinfile:
+    path: ./log.txt
+    mode: 0666
+    line: "{{ inventory_hostname }} reboot time - {{ hostuptime.start }}"
+  delegate_to: 127.0.0.1

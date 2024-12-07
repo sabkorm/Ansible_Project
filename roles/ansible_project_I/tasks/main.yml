@@ -1,0 +1,83 @@
+---
+# tasks file for ansible_project_I
+
+
+- block:
+  - name: updating ubuntu
+    apt:
+      update_cache: yes
+
+  - name: install htop and tree
+    apt:  name={{ item }}   state=latest
+    with_items:
+      - htop
+      - tree
+
+  - name: install apache
+    apt:  name=apache2  state=latest
+
+  - name: start apache
+    service: name=apache2  state=started  enabled=yes
+
+  - name: copy files
+    copy: src={{ item }}  dest={{  dest_file  }}  mode=0444
+    with_fileglob: "*.*"
+    notify: restart apache service
+
+  - name: restart apache
+    service: name=apache2 state=restarted
+
+  when: ansible_os_family == "Debian"
+
+
+- block:
+
+  - name: updating fedora
+    dnf:
+      update_cache: yes
+
+  - name: install htop and tree on fedora
+    dnf:  name={{ item }}  state=latest
+    with_items:
+      - htop
+      - tree
+
+  - name: install httpd
+    dnf:  name=httpd  state=latest
+
+  - name: start httpd
+    service: name=httpd  state=started  enabled=yes
+
+  - name: copy files
+    copy: src={{ item }}  dest={{  dest_file  }}  mode=0555
+    with_fileglob: "*.*"
+    notify: restart httpd service
+
+  when: ansible_os_family == "RedHat"
+
+
+- name: group by
+  group_by:
+    key: "{{ ansible_os_family }}"
+
+- block:
+  - name: delete file
+    shell: rm ./distributions.txt
+    run_once: yes
+
+  - name: sample output
+    lineinfile:
+      path: ./distributions.txt
+      line: "{{ item }} has {{ groups[item] | length }} hosts."
+      create: yes
+    when: item == 'Debian'  or  item == 'RedHat'
+    loop: "{{ groups|flatten(levels=1) }}"
+
+  - name: printing
+    shell: cat ./distributions.txt
+    register: printdis
+
+  - debug:
+      msg: "{{ printdis.stdout_lines }}"
+    run_once: yes
+  delegate_to: 127.0.0.1

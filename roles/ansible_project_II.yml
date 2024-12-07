@@ -1,0 +1,6 @@
+- name: print text
+  hosts: all
+  become: yes
+
+  roles:
+    - training_project
