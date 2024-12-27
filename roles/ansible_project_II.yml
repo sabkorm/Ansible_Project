@@ -3,4 +3,4 @@
   become: yes
 
   roles:
-    - training_project
+    - ansible_project_II
