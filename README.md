@@ -1,9 +1,9 @@
 # Ansible project
 
 ## Overview
-This Ansible project is separated into two parts, executing different tasks on the host machines:
+This is an example project to practice how to write tasks. This project is separated into two parts, executing different tasks on the host machines:
 
-### Ansible project I:
+### Ansible project I
 
 - Installing different packages on the host machines (htop, tree)
 - Updating the system
@@ -11,7 +11,7 @@ This Ansible project is separated into two parts, executing different tasks on t
 - Copying files to host machines
 - Printing onto the screen how many RedHat hosts are there, and how many Debian hosts are there
 
-### Anible Project II:
+### Anible Project II
 
 - Copying files from the master machine onto the host machine
 - Using a loop to print certain messages
