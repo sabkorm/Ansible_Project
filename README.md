@@ -1,7 +1,7 @@
 # Ansible project
 
 ## Overview
-This Ansible project is separated into two parts, executing different tasks on the host machines.
+This Ansible project is separated into two parts, executing different tasks on the host machines:
 
 ### Ansible project I:
 
