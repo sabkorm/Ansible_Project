@@ -1,7 +1,7 @@
 # Ansible project
 
 ## Overview
-This is an example project to practice how to write tasks. This project is separated into two parts, executing different tasks on the host machines:
+This is an example project to practice how to write Ansible tasks. This project is separated into two parts, executing different tasks on the host machines:
 
 ### Ansible project I
 
